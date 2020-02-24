@@ -2,35 +2,38 @@ body {
   background-color: #efefef;
 }
 .page {
-  max-width: 1100px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  font-family: 'EB Garamond';
+}
+
+h1 {
+  font-size: 50px;
+  font-weight: lighter;
 }
 
 img {
   border-radius: 50%;
   float: left;
+  position: fixed;
 }
 
 .copy {
   text-align: left;
-  max-width: 600px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
 
 p {
-  font-size: 20px;
-  line-height: 1.25em;
-  font-family: 'Quattrocento';
-}
-
-h1 {
-font-family: 'Cinzel';
+  font-size: 18px;
+  line-height: 1.75em;
 }
 
 footer {
-   position: absolute;
+   position:  fixed;
+   left: 0;
    bottom: 0;
    width: 100%;
    text-align: center;
