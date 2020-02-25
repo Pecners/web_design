@@ -1,22 +1,78 @@
+* {
+  margin: 0;
+}
+
 body {
   background-color: #efefef;
 }
+
+li {
+  display: inline;
+  padding: 20px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #dadada;
+  overflow: hidden;
+  margin-bottom: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.topnav-body {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #34495e;
+  padding-right: 16px;
+  padding-left: 16px;
+  padding-top: 20px;
+  padding-bottom: 16px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  color: #CB4335;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active, a.name {
+  color: #CB4335;
+}
+
+.topnav a.name {
+  padding-top: 10px;
+  font-size: 30px;
+}
+
 .page {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 100px;
   font-family: 'EB Garamond';
 }
 
 h1 {
   font-size: 50px;
   font-weight: lighter;
+  margin-bottom: 50px;
 }
 
 img {
   border-radius: 50%;
   float: left;
-  position: fixed;
+  position: sticky;
+  margin-right: 10px;
 }
 
 .copy {
@@ -24,6 +80,7 @@ img {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  font-family: inherit;
 }
 
 p {
@@ -32,9 +89,10 @@ p {
 }
 
 footer {
-   position:  fixed;
+   position:  absolute;
    left: 0;
    bottom: 0;
    width: 100%;
+   margin-bottom: 10px;
    text-align: center;
 }
