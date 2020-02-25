@@ -79,18 +79,18 @@ var rateBySway = {};
     	})
       .on("mousemove", function(d){
     		return [tooltip.style("top", (d3.event.pageY-125)+"px")
-        .style("left",(d3.event.pageX-50)+"px"),
-        tooltip_title.style("top", (d3.event.pageY-125)+"px")
-        .style("left",(d3.event.pageX-30)+"px")
-        .text("RESULTS"),
-        ward.style("visibility", "visible")
-        .style("top", (d3.event.pageY-100)+"px")
-        .style("left",(d3.event.pageX-40)+"px")
-        .text("Ward: " + d.properties.WARD),
-        sway.style("visibility", "visible")
-        .style("top", (d3.event.pageY-75)+"px")
-        .style("left",(d3.event.pageX-40)+"px")
-        .text("Sway: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
+                       .style("left",(d3.event.pageX-50)+"px"),
+                tooltip_title.style("top", (d3.event.pageY-125)+"px")
+                             .style("left",(d3.event.pageX-30)+"px")
+                             .text("RESULTS"),
+                ward.style("visibility", "visible")
+                    .style("top", (d3.event.pageY-100)+"px")
+                    .style("left",(d3.event.pageX-40)+"px")
+                    .text("Ward: " + d.properties.WARD),
+                sway.style("visibility", "visible")
+                    .style("top", (d3.event.pageY-75)+"px")
+                    .style("left",(d3.event.pageX-40)+"px")
+                    .text("Sway: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
     	})
     	.on("mouseout", function(d){
         d3.select(this)
