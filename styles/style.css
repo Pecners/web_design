@@ -18,7 +18,8 @@ li {
   margin-bottom: 50px;
   position: fixed;
   top: 0;
-  width: 100%
+  width: 100%;
+  box-shadow: 0 -2px 10px 0px #777777
 }
 
 .topnav-body {
