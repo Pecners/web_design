@@ -96,3 +96,16 @@ footer {
    margin-bottom: 10px;
    text-align: center;
 }
+
+.tooltip {
+  position: absolute;
+  z-index: 10;
+  visibility: hidden;
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+  background: white;
+  opacity: 0.9;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(200, 200, 200, 0.85);
+}
