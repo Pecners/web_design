@@ -1,0 +1,54 @@
+<!-- <!DOCTYPE html> -->
+<meta charset="utf-8">
+<head>
+  <link href="../styles/style.css" type="text/css"
+    rel="stylesheet" />
+  <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+  <title>Force layout (with collision detection)</title>
+</head>
+
+<style>
+circle {
+  fill: orange;
+}
+</style>
+
+<body>
+  <div class="page">
+
+  <script>
+  var schools = [];
+  var width = 300, height = 300;
+
+  d3.csv("school_enrollment.csv", function(d) {
+  	return {
+  		school : d.school_name,
+  		score : +d.overall_score,
+  		enrollment : +d.school_enrollment,
+      agency : d.broad_agency_type
+  	};
+  }, function(error, rows) {
+  	schools = rows;
+  	return schools;
+  });
+
+  var svg = d3.select('svg')
+              .selectAll('circle')
+              .data(schools)
+              .enter()
+              .attr('r', function(d) {
+                return d.enrollment
+              })
+
+d3.forceSimulation(schools)
+      .force('charge', d3.forceManyBody().strength(5))
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('collision', d3.forceCollide().radius(function(d) {
+        return d.enrollment
+      }));
+
+  </script>
+</div>
+
+</body>
+</html>
