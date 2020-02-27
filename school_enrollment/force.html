@@ -20,7 +20,9 @@
           .attr("height", height)
           .style("fill-opacity", ".75");
 
-          var color = d3.scaleOrdinal(d3.schemeCategory10);
+          var color = d3.scaleOrdinal()
+                        .domain(["District-Run", "Private", "Independent Charter"])
+                        .range(["#003349", "#e57200", "#69dbc8"]);
 
       var simulation = d3.forceSimulation()
           .force("forceX", d3.forceX().strength(.25).x(width * .5))
