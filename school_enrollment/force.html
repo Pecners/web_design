@@ -12,7 +12,7 @@
   <script>
   var width = window.innerWidth, height = window.innerHeight, sizeDivisor = 100, nodePadding = 100;
   var xCenter = [width*.25, width*.5, width*.75];
-  var dForce = 175;
+  var dForce = 200;
 
       var svg = d3.select("body")
           .append("svg")
@@ -28,7 +28,7 @@
           .force("forceX", d3.forceX().strength(.25).x(width * .5))
           .force("forceY", d3.forceY().strength(.25).y(height * .5))
           .force("center", d3.forceCenter().x(width * .5).y(height * .5))
-          .force("charge", d3.forceManyBody().strength(-100));
+          .force("charge", d3.forceManyBody().strength(dForce*(-.25)));
 
       d3.csv("school_enrollment.csv", types, function(error,graph){
         if (error) throw error;
