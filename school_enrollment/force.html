@@ -1,158 +1,156 @@
-<!-- <!DOCTYPE html> -->
-<meta charset="utf-8">
-<head>
-  <link href="../styles/style.css" type="text/css"
-    rel="stylesheet" />
-  <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
-  <title>Force layout (with collision detection)</title>
-</head>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="../styles/style.css" type="text/css"
+      rel="stylesheet" />
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <title>Force layout (with collision detection)</title>
+  </head>
 <body>
-  <div class="page">
+  <div class="page" style="padding:10px">
+    <h1 style="text-align:center">Milwaukee Student Enrollment</h1>
+    <script>
+      var width = +d3.select(".page").style("max-width").slice(0,4);
+      var height =  700;
+      var sizeDivisor = 100, nodePadding = 100;
+      var dForce = 200;
 
-  <script>
-  var width = window.innerWidth, height = window.innerHeight, sizeDivisor = 100, nodePadding = 100;
-  var dForce = 200;
+        var svg = d3.select(".page")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("fill-opacity", ".75");
 
-      var svg = d3.select("body")
-          .append("svg")
-          .attr("width", width)
-          .attr("height", height)
-          .style("fill-opacity", ".75");
+            var color = d3.scaleOrdinal()
+                          .domain(["District-Run", "Private", "Independent Charter"])
+                          .range(["#003349", "#e57200", "#69dbc8"]);
 
-          var color = d3.scaleOrdinal()
-                        .domain(["District-Run", "Private", "Independent Charter"])
-                        .range(["#003349", "#e57200", "#69dbc8"]);
+        var simulation = d3.forceSimulation()
+            .force("forceX", d3.forceX().strength(.25).x(width/2))
+            .force("forceY", d3.forceY().strength(.25).y(height/2))
+            .force("center", d3.forceCenter().x(width/2).y(height/2))
+            .force("charge", d3.forceManyBody().strength(dForce*(-.25)));
 
-      var simulation = d3.forceSimulation()
-          .force("forceX", d3.forceX().strength(.25).x(width * .5))
-          .force("forceY", d3.forceY().strength(.25).y(height * .5))
-          .force("center", d3.forceCenter().x(width * .5).y(height * .5))
-          .force("charge", d3.forceManyBody().strength(dForce*(-.25)));
-
-      d3.csv("school_enrollment.csv", types, function(error,graph){
-        if (error) throw error;
-
-
-        //update the simulation based on the data
-        simulation
-            .nodes(graph)
-            .force("collide", d3.forceCollide().strength(.5).radius(function(d){ return d.radius * 1.1; }))
-            .force("x", d3.forceX().x(function(d) {
-              if(d.agency == "District-Run") {
-                return -dForce
-              } else if(d.agency == "Private") {
-                return dForce
-              } else { return 0 };
-            }))
-            .force("y", d3.forceY().y(function(d) {
-              if(d.agency == "District-Run") {
-                return -dForce
-              } else if(d.agency == "Private") {
-                return -dForce
-              } else { return Math.sqrt(2*dForce^2) };
-            }))
-            .on("tick", function(d){
-              node
-                  .attr("cx", function(d){ return d.x; })
-                  .attr("cy", function(d){ return d.y; })
-            });
-
-        var yAdj = 250;
-        var byAdj = 30;
-
-        var node = svg.append("g")
-          .selectAll("circle")
-          .data(graph)
-          .enter().append("circle")
-            .attr("r", function(d) { return d.radius; })
-            .attr("fill", function(d) { return color(d.agency); })
-            .style("stroke", function(d) { return color(d.agency); })
-            .attr("cx", function(d){ return d.x; })
-            .attr("cy", function(d){ return d.y; })
-            .on("mouseover", function(d) {
-              d3.select(this)
-              .style("stroke", "black")
-              .style("stroke-width", "2px");
-              return [tooltip.style("visibility", "visible"),
-                      school.style("visibility", "visible")
-                            .text(d.school),
-                      agency.style("visibility", "visible")
-                            .text(d.agency),
-                      enrollment.style("visibility", "visible")
-                            .text("Enrollment: " + d3.format(",")(d.enrollment))
-                          ]
-            })
-            .on("mousemove", function(d) {
-              return [tooltip.style("top", (d3.event.pageY-yAdj)+"px")
-                             .style("left", (d3.event.pageX-50)+"px"),
-                      school.style("top", (d3.event.pageY-yAdj)+"px")
-                                     .style("left", (d3.event.pageX-50)+"px")
-                                     .text(d.school),
-                      agency.style("top", (d3.event.pageY-yAdj+byAdj)+"px")
-                                     .style("left", (d3.event.pageX-50)+"px")
-                                     .text(d.agency),
-                      enrollment.style("top", (d3.event.pageY-yAdj+byAdj*2)+"px")
-                                     .style("left", (d3.event.pageX-50)+"px")
-                                     .text("Enrollment: " + d3.format(",")(d.enrollment))
-              ]
-            })
-            .on("mouseout", function(d) {
-              d3.select(this)
-                .style("stroke", function(d) { return color(d.agency); })
-                .style("stroke-width", "1px");
-              return [tooltip.style("visibility", "hidden"),
-                      school.style("visibility", "hidden"),
-                      agency.style("visibility", "hidden"),
-                      enrollment.style("visibility", "hidden")]
-            });
-
-      });
+        d3.csv("school_enrollment.csv", types, function(error,graph){
+          if (error) throw error;
 
 
-      function types(d){
-        d.enrollment = +d.school_enrollment;
-        d.radius = +d.school_enrollment / 30;
-        d.radius < 1 ? d.radius = 3 : d.radius = d.radius;
-        d.agency = d.broad_agency_type;
-        d.school = d.school_name;
-        return d;
-      }
+          //update the simulation based on the data
+          simulation
+              .nodes(graph)
+              .force("collide", d3.forceCollide().strength(.5).radius(function(d){ return d.radius * 1.1; }))
+              .force("x", d3.forceX().x(function(d) {
+                if(d.agency == "District-Run") {
+                  return -dForce
+                } else if(d.agency == "Private") {
+                  return dForce
+                } else { return 0 };
+              }))
+              .force("y", d3.forceY().y(function(d) {
+                if(d.agency == "District-Run") {
+                  return -dForce
+                } else if(d.agency == "Private") {
+                  return -dForce
+                } else { return Math.sqrt(2*dForce^2) };
+              }))
+              .on("tick", function(d){
+                node
+                    .attr("cx", function(d){ return d.x; })
+                    .attr("cy", function(d){ return d.y; })
+              });
 
-      var tooltip = d3.select(".page")
-        .append("div")
-        .style("position", "absolute")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
-        .style("width", "175px")
-        .style("height", "150px")
-        .style("padding", "2px")
-        .style("background", "white")
-        .style("opacity", "0.9")
-        .style("box-shadow", "0 1px 5px rgba(0, 0, 0, 0.4)")
-        .style("border", "1px solid rgba(200, 200, 200, 0.85)");
+          var yAdj = 200;
+          var byAdj = 30;
 
-      var school = d3.select(".page")
-            .append("div")
-            .style("position", "absolute")
-            .style("z-index", "10")
-            .style("visibility", "hidden")
-            .style("font-weight", "bold")
-            .style("text-decoration", "underline");
+          var node = svg.append("g")
+            .selectAll("circle")
+            .data(graph)
+            .enter().append("circle")
+              .attr("r", function(d) { return d.radius; })
+              .attr("fill", function(d) { return color(d.agency); })
+              .style("stroke", function(d) { return color(d.agency); })
+              .attr("cx", function(d){ return d.x; })
+              .attr("cy", function(d){ return d.y; })
+              .on("mouseover", function(d) {
+                d3.select(this)
+                .style("stroke", "black")
+                .style("stroke-width", "2px");
+                return [tooltip.style("visibility", "visible"),
+                        school.text(d.school),
+                        agency.text(d.agency),
+                        enrollment.text("Enrollment: " + d3.format(",")(d.enrollment))
+                            ]
+              })
+              .on("mousemove", function(d) {
+                return [tooltip.style("top", (d3.event.pageY-yAdj)+"px")
+                               .style("left", (d3.event.pageX-250/2)+"px"),
+                        school.text(d.school),
+                        agency.text(d.agency),
+                        enrollment.text("Enrollment: " + d3.format(",")(d.enrollment))
+                ]
+              })
+              .on("mouseout", function(d) {
+                d3.select(this)
+                  .style("stroke", function(d) { return color(d.agency); })
+                  .style("stroke-width", "1px");
+                return [tooltip.style("visibility", "hidden")]
+              });
 
-      var agency = d3.select(".page")
-            .append("div")
-            .style("position", "absolute")
-            .style("z-index", "10")
-            .style("visibility", "hidden")
-            .style("font-style", "italic")
-            .style("opacity", ".75")
+        });
 
-      var enrollment = d3.select(".page")
-            .append("div")
-            .style("position", "absolute")
-            .style("z-index", "10")
-            .style("visibility", "hidden");
-  </script>
+
+        function types(d){
+          d.enrollment = +d.school_enrollment;
+          d.radius = +d.school_enrollment / 30;
+          d.radius < 1 ? d.radius = 3 : d.radius = d.radius;
+          d.agency = d.broad_agency_type;
+          d.school = d.school_name;
+          return d;
+        }
+
+        var tooltip = d3.select(".page")
+          .append("div")
+          .attr("class", "tooltip")
+          .style("position", "absolute")
+          .style("z-index", "10")
+          .style("visibility", "hidden")
+          .style("width", "250px")
+          .style("height", "125px")
+          .style("padding", "2px")
+          .style("background", "white")
+          .style("opacity", "0.9")
+          .style("box-shadow", "0 1px 5px rgba(0, 0, 0, 0.4)")
+          .style("border", "1px solid rgba(200, 200, 200, 0.85)");
+
+        var school = d3.select(".tooltip")
+              .append("div")
+              .style("padding-bottom", "10px")
+              .style("position", "relative")
+              .style("z-index", "10")
+              .style("visibility", "inherit")
+              .style("font-weight", "bold")
+              .style("text-decoration", "underline")
+              .style("text-align", "center");
+
+        var agency = d3.select(".tooltip")
+              .append("div")
+              .style("padding-bottom", "10px")
+              .style("position", "relative")
+              .style("z-index", "10")
+              .style("visibility", "inherit")
+              .style("font-style", "italic")
+              .style("opacity", ".75")
+              .style("text-align", "center");
+
+        var enrollment = d3.select(".tooltip")
+              .append("div")
+              .style("padding-bottom", "10px")
+              .style("position", "relative")
+              .style("z-index", "10")
+              .style("visibility", "inherit")
+              .style("text-align", "center");
+    </script>
 </div>
 
 </body>
