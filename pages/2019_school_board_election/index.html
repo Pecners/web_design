@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher's Union Sweeps School Board Election</title>
+    <link rel="icon" href="../images/logo.png">
+    <link href="../../styles/style.css" type="text/css"
+      rel="stylesheet" />
+      <link rel="icon" href="../../images/logo.png">
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Quattrocento&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+</head>
+<body>
+  <div class="topnav">
+    <div class="topnav-body">
+    <a class="name" href="..\..\index.html">Spencer Schien</a>
+  </div>
+  </div>
+  <div class="page">
+  <div class="copy">
+    <h1>Teacher's Union Sweeps School Board Election</h1>
+    <script>
+    var width = 900;
+    var height = 850;
+
+    var svg = d3.select( ".page" )
+        .append( "svg" )
+        .attr( "width", width )
+        .attr( "height", height )
+        .attr("display", "block")
+        .style("margin-left", "auto")
+        .style("margin-right", "auto");
+
+    var albersProjection = d3.geoAlbers()
+        .scale( 175000 )
+        .center([0, 43.06])
+        .rotate([87.971, 0])
+        .translate( [width/2,height/2] );
+
+    var geoPath = d3.geoPath()
+        .projection( albersProjection );
+
+    d3.queue()
+      .defer(d3.json, "../../data/wards.geojson")
+      .defer(d3.csv, "election_data.csv")
+      .await(ready);
+
+var color = d3.scaleLinear()
+    .domain([-100, 0, 100])
+    .range(["red", "lightgrey", "blue"])
+
+function ready(error, wards, election) {
+  if (error) throw error;
+
+var rateBySway = {};
+  election.forEach(function(d) {
+    rateBySway[d.WARD] = +d.sway
+  });
+
+  svg.selectAll( "path" )
+      .data( wards.features )
+      .enter()
+      .append( "path" )
+      .attr( "fill", function(d) {
+        return color(rateBySway[d.properties.WARD]);
+      })
+      .attr( "stroke", "white")
+      .attr( "d", geoPath )
+      .on("mouseover", function(d){
+              d3.select(this)
+              .attr("opacity", ".25");
+              return [tooltip.style("visibility", "visible"),
+                      tooltip_title.style("visibility", "visible")
+                                   .text("RESULTS"),
+                      ward.style("visibility", "visible")
+                            .text("Ward: " + d.properties.WARD),
+                      sway.style("visibility", "visible")
+                          .text("Sway: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
+    	})
+      .on("mousemove", function(d){
+    		return [tooltip.style("top", (d3.event.pageY-125)+"px")
+                       .style("left",(d3.event.pageX-50)+"px"),
+                tooltip_title.style("top", (d3.event.pageY-125)+"px")
+                             .style("left",(d3.event.pageX-30)+"px")
+                             .text("RESULTS"),
+                ward.style("visibility", "visible")
+                    .style("top", (d3.event.pageY-100)+"px")
+                    .style("left",(d3.event.pageX-40)+"px")
+                    .text("Ward: " + d.properties.WARD),
+                sway.style("visibility", "visible")
+                    .style("top", (d3.event.pageY-75)+"px")
+                    .style("left",(d3.event.pageX-40)+"px")
+                    .text("Sway: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
+    	})
+    	.on("mouseout", function(d){
+        d3.select(this)
+        .attr("opacity", "1");
+    		return [tooltip.style("visibility", "hidden"),
+                tooltip_title.style("visibility", "hidden"),
+                ward.style("visibility", "hidden"),
+                sway.style("visibility", "hidden")];
+    	});
+
+  var tooltip = d3.select(".page")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .style("width", "100px")
+    .style("height", "75px")
+    .style("padding", "2px")
+    .style("background", "white")
+    .style("opacity", "0.9")
+    .style("box-shadow", "0 1px 5px rgba(0, 0, 0, 0.4)")
+    .style("border", "1px solid rgba(200, 200, 200, 0.85)");
+
+  var tooltip_title = d3.select(".page")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .style("font-weight", "bold")
+        .style("text-decoration", "underline");
+
+  var ward = d3.select(".page")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden");
+
+  var sway = d3.select(".page")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden");
+}
+
+
+d3.selectAll("svg")
+.attr("align", "center");
+    </script>
+  </div>
+</div>
+</body>
+</html>
