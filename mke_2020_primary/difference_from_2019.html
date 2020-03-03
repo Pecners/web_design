@@ -5,7 +5,7 @@
     <link rel="icon" href="../images/logo.png">
     <link href="../styles/style.css" type="text/css"
       rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Quattrocento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=EB+GaramondEB+Garamond:400,700|Quattrocento&display=swap" rel="stylesheet">
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 </head>
@@ -41,7 +41,7 @@
 
       var color = d3.scaleLinear()
           .domain([-.10, 0, .10])
-          .range(["red", "lightgrey", "green"])
+          .range(["red", "lightgrey", "green"]);
 
       var legend = d3.select("svg")
                      .append("g");
@@ -59,7 +59,7 @@
                           .style("text-align", "center")
                           .style("font-weight", "bold");
 
-      var legendX = 400;
+      var legendX = 350;
 
       legend.selectAll("rect")
             .data(color.domain())
@@ -84,7 +84,17 @@
             })
             .text(function(d) {return d3.format(".1f")(d*100) + "%"});
 
-      legendTitle.text("Change in voter turnout 2019 to 2020");
+
+      legend.selectAll("text")
+            .data("Years")
+            .enter()
+            .append("text")
+            .attr("x", 325)
+            .attr("y", 40)
+            .attr("font-weight", "bold")
+            .attr("text-decoration", "underline")
+            .text("2019 to 2020 Change");
+
 
 function ready(error, wards, changes) {
   if (error) throw error;
