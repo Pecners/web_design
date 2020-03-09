@@ -22,9 +22,8 @@
         .append( "svg" )
         .attr( "width", width )
         .attr( "height", height )
-        .attr("display", "block")
-        .style("margin-left", "auto")
-        .style("margin-right", "auto");
+        .attr("display", "inline")
+        .style("background-color", "yellow");
 
     var albersProjection = d3.geoAlbers()
         .scale( 175000 )
@@ -202,11 +201,15 @@ var _2019 = {};
 
 }
 
-
 d3.selectAll("svg")
-.attr("align", "center");
+  .attr("align", "center");
+
     </script>
   </div>
+  <p style="float:left; max-width:350px; font-size:20px;">
+    The 2020 primary took place on February 18, 2020.  The 2019 election took place on
+    April 2, 2019.
+  </p>
   <p style="text-align:center">Data Source: <a href="https://data.milwaukee.gov/">https://data.milwaukee.gov/</a></p>
 
 </div>
