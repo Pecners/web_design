@@ -3,6 +3,7 @@
 body {
   margin: 0;
   background-color: #efefef;
+  position: relative;
 }
 
 /* Add a black background color to the top navigation */
@@ -49,8 +50,10 @@ body {
 
 .page {
   max-width: 1200px;
+  min-height: 100%;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 30px;
   padding-top: 70px;
   font-family: 'EB Garamond';
 }
@@ -69,6 +72,11 @@ h1 {
   font-size: 30px;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.tiles {
+  overflow: auto;
+  width: 100%;
 }
 
 .list {
@@ -122,8 +130,8 @@ p {
 }
 
 footer {
-   left: 0;
    bottom: 0;
+   left: 0;
    position: absolute;
    width: 100%;
    margin-bottom: 10px;
@@ -131,7 +139,6 @@ footer {
 }
 
 .tooltip {
-  position: absolute;
   z-index: 10;
   visibility: hidden;
   width: 100px;
