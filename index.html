@@ -27,6 +27,16 @@
         <p>In addition to serving as a presentation platform,
           this site is also a bit of a playground for me to learn web development (i.e. HTML, CSS, JavaScript).
         As such, this entire site is hard coded by me.</p>
+        <script type="text/javascript", src="scripts/require.js">
+        var fs = require('fs');
+        try {
+          const arrayOfFiles = fs.readdirSync("./pages")
+          console.log(arrayOfFiles)
+        } catch(e) {
+          console.log(e)
+        }
+        console.log("Test")
+        </script>
     </div>
     <div class="tiles">
       <h2>Data Visualizations</h2>
