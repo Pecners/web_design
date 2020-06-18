@@ -135,7 +135,7 @@ p {
 
 footer {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 50px;
 }
 
 .tooltip {
@@ -148,4 +148,27 @@ footer {
   opacity: 0.9;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(200, 200, 200, 0.85);
+}
+
+#quote {
+  text-align: center;
+  font-size: 30pt;
+  font-style: italic;
+  color: #CB4335;
+  opacity: .75;
+  max-width: 500px;
+  line-height: normal;
+  padding: 10px;
+}
+
+.attribution {
+  text-align: right;
+  padding-right: 10px;
+  list-style-type: none;
+  font-size: 16pt;
+  opacity: .75;
+}
+
+li.attribution::before {
+  content: "- ";
 }
