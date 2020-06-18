@@ -17,10 +17,9 @@
       </div>
     </div>
     <div class="page">
-      <div class="list">
+      <div class="random-quote">
         <p id="quote"></p>
         <li class="attribution"></li>
-
       </div>
 
     </div>
@@ -29,6 +28,9 @@
   </script> Spencer Schien</footer>
   <script>
     d3.csv("./data/quotes.csv", function(data) {
+
+      // Check that data is reading in properly
+
       console.log(data.length)
 
       const num = Math.floor(Math.random() * (data.length - 1));
