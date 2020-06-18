@@ -84,15 +84,22 @@ h1 {
 }
 
 .list, .random-quote {
-  min-width: 400px;
   background-color: white;
   opacity: .9;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
-  margin: 10px;
   padding-bottom: 0;
   float: left;
   border-radius: 5px;
   position: inherit;
+}
+
+.list {
+  min-width: 400px;
+  margin: 10px;
+}
+
+.random-quote {
+  width: 500px;
 }
 
 .list-title {
@@ -156,9 +163,11 @@ footer {
   font-style: italic;
   color: #CB4335;
   opacity: .95;
-  max-width: 500px;
+  max-width: 400px;
   line-height: normal;
   padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 li.attribution {
