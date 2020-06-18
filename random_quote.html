@@ -27,19 +27,22 @@
     document.write(new Date().getFullYear());
   </script> Spencer Schien</footer>
   <script>
-
-
-    d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQLvKmAS2YDmI7YdgeaBPokUOCdNNpCmOLPPhuvmJdPdxSeMy2w_0mgTbZ5tf26g6HiqPphMTDeN9RK/pub?output=csv", function(data) {
-
-      // Check that data is reading in properly
-
-      console.log(data.length)
+    const getQuotes = () => {
+      d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQLvKmAS2YDmI7YdgeaBPokUOCdNNpCmOLPPhuvmJdPdxSeMy2w_0mgTbZ5tf26g6HiqPphMTDeN9RK/pub?output=csv", function(data) {
 
       const num = Math.floor(Math.random() * (data.length));
+
       document.getElementById("quote").innerHTML = data[num].Quote;
       document.querySelector("li.attribution").innerHTML = data[num]["Author/Speaker"] + ", " + "<em>" + data[num].Source + "</em>";
-
     });
+  }
+
+  getQuotes();
+  document.querySelector(".random-quote").onclick = () => {
+    getQuotes();
+  }
+
+
   </script>
   </body>
 </html>

@@ -99,6 +99,7 @@ h1 {
 }
 
 .random-quote {
+  cursor: pointer;
   width: 500px;
 }
 
