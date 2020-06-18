@@ -33,7 +33,7 @@
 
       console.log(data.length)
 
-      const num = Math.floor(Math.random() * (data.length - 1));
+      const num = Math.floor(Math.random() * (data.length));
       document.getElementById("quote").innerHTML = data[num].Quote;
       document.querySelector("li.attribution").innerHTML = data[num]["Author/Speaker"] + ", " + "<em>" + data[num].Source + "</em>";
 
