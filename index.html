@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="author" content="Spencer Schien">
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v5.js"></script>
     <link rel="icon" href="images/logo.png">
     <link href="styles/style.css" type="text/css"
       rel="stylesheet" />
@@ -28,22 +28,8 @@
         <p>In addition to serving as a presentation platform,
           this site is also a bit of a playground for me to learn web development (i.e. HTML, CSS, JavaScript).
         As such, this entire site is hard coded by me.</p>
-        <script type="text/javascript", src="scripts/require.js">
-        var fs = require('fs');
-        try {
-          const arrayOfFiles = fs.readdirSync("./pages")
-          console.log(arrayOfFiles)
-        } catch(e) {
-          console.log(e)
-        }
-        console.log("Test")
-        </script>
     </div>
     <div class="page" style="margin-top: 50px;">
-      <div class="random-quote">
-        <p id="quote"></p>
-        <li class="attribution"></li>
-      </div>
     </div>
     <div class="tiles">
       <h2>Data Visualizations</h2>
@@ -70,18 +56,30 @@
         </ul>
       </div>
     </div>
+    <h2>Quote Getter</h2>
+    <div class="copy">
+      <p>This is a fun little script that plays to my love of quotes.  I keep a spreadsheet of quotes I like, so I thought it would
+      be cool to create a random quote getter from this sheet.  The sheet is read in using D3, and then a random index is selected
+    for the quote, author, and source work of the quote.  Basic JavaScript is then used to bind the data to specific elements.</p>
+    </div>
+    <div class="random-quote">
+      <p id="quote"></p>
+      <li class="attribution"></li>
+    </div>
   </div>
   <footer>&copy; <script type="text/javascript">
     document.write(new Date().getFullYear());
   </script> Spencer Schien</footer>
   <script>
     const getQuotes = () => {
-      d3.tsv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQLvKmAS2YDmI7YdgeaBPokUOCdNNpCmOLPPhuvmJdPdxSeMy2w_0mgTbZ5tf26g6HiqPphMTDeN9RK/pub?output=tsv", function(data) {
+      d3.csv("/data/quotes.csv")
+      .then(function(data) {
 
       const num = Math.floor(Math.random() * (data.length));
 
       document.getElementById("quote").innerHTML = data[num].Quote;
       document.querySelector("li.attribution").innerHTML = data[num]["Author/Speaker"] + ", " + "<em>" + data[num].Source + "</em>";
+      console.log(data[0]);
     });
   }
 
