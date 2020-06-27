@@ -72,7 +72,7 @@
   </script> Spencer Schien</footer>
   <script>
     const getQuotes = () => {
-      d3.csv("/data/quotes.csv")
+      d3.csv("./data/quotes.csv")
       .then(function(data) {
 
       const num = Math.floor(Math.random() * (data.length));
