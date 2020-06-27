@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="author" content="Spencer Schien">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <link rel="icon" href="images/logo.png">
     <link href="styles/style.css" type="text/css"
       rel="stylesheet" />
@@ -73,5 +74,21 @@
   <footer>&copy; <script type="text/javascript">
     document.write(new Date().getFullYear());
   </script> Spencer Schien</footer>
+  <script>
+    const getQuotes = () => {
+      d3.tsv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQLvKmAS2YDmI7YdgeaBPokUOCdNNpCmOLPPhuvmJdPdxSeMy2w_0mgTbZ5tf26g6HiqPphMTDeN9RK/pub?output=tsv", function(data) {
+
+      const num = Math.floor(Math.random() * (data.length));
+
+      document.getElementById("quote").innerHTML = data[num].Quote;
+      document.querySelector("li.attribution").innerHTML = data[num]["Author/Speaker"] + ", " + "<em>" + data[num].Source + "</em>";
+    });
+  }
+
+  getQuotes();
+  document.querySelector(".random-quote").onclick = () => {
+    getQuotes();
+  }
+  </script>
   </body>
 </html>
