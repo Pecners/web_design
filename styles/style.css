@@ -28,24 +28,28 @@ header {
 
 /* Style the links inside the navigation bar */
 .topnav a {
-  float: left;
-  color: #34495e;
   padding-right: 16px;
   padding-left: 16px;
   padding-top: 20px;
   padding-bottom: 16px;
-  text-decoration: none;
   font-size: 20px;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-  opacity: 0.5;
+.topnav a, .list a {
+  text-decoration: none;
+  float: left;
 }
 
-/* Add a color to the active/current link */
-.topnav a.active, a.name {
+.list a {
+  padding: 5px 0;
+}
+
+a {
   color: #CB4335;
+}
+
+a:hover {
+  opacity: 0.5;
 }
 
 .topnav a.name {
@@ -112,16 +116,11 @@ h1 {
 }
 .list ul {
   list-style-type: none;
+  margin: 0;
 }
 
 .list li {
   font-size: 15pt;
-  padding-bottom: 5px;
-}
-
-.list li:hover {
-  font-size: 16pt;
-  padding-bottom: 4px;
 }
 
 img {
