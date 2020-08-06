@@ -85,7 +85,7 @@ var rateBySway = {};
                       ward.style("visibility", "visible")
                             .text("Ward: " + d.properties.WARD),
                       sway.style("visibility", "visible")
-                          .text("Sway: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
+                          .text("Margin: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
     	})
       .on("mousemove", function(d){
     		return [tooltip.style("top", (d3.event.pageY-125)+"px")
@@ -100,7 +100,7 @@ var rateBySway = {};
                 sway.style("visibility", "visible")
                     .style("top", (d3.event.pageY-75)+"px")
                     .style("left",(d3.event.pageX-40)+"px")
-                    .text("Sway: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
+                    .text("Margin: " + d3.format(".1f")(rateBySway[d.properties.WARD]) + "%")];
     	})
     	.on("mouseout", function(d){
         d3.select(this)
